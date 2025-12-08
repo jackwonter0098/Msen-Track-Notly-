@@ -22,5 +22,21 @@ export const quotes = [
     {
         en: "A journey of a thousand miles begins with a single step.",
         hi: "हजारों मील की यात्रा एक कदम से शुरू होती है।",
+    },
+    {
+        en: "That which does not kill us makes us stronger.",
+        hi: "जो हमें मारता नहीं है, वह हमें मजबूत बनाता है।",
+    },
+    {
+        en: "The future belongs to those who believe in the beauty of their dreams.",
+        hi: "भविष्य उनका है जो अपने सपनों की सुंदरता में विश्वास करते हैं।",
+    },
+    {
+        en: "Strive not to be a success, but rather to be of value.",
+        hi: "सफलता का व्यक्ति बनने का प्रयास न करें, बल्कि मूल्य का व्यक्ति बनें।",
+    },
+    {
+        en: "The mind is everything. What you think you become.",
+        hi: "मन सब कुछ है। आप जो सोचते हैं वही बन जाते हैं।",
     }
 ];
