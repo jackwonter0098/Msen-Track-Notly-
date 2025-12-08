@@ -8,6 +8,8 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   title: 'Msen Track Notely',
   description: 'Track your challenges and take notes on your progress.',
+  applicationName: 'Msen Track Notely',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

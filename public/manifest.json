@@ -1,0 +1,9 @@
+{
+  "name": "Msen Track Notely",
+  "short_name": "Msen Track Notely",
+  "description": "Track your challenges and take notes on your progress.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4F46E5"
+}
