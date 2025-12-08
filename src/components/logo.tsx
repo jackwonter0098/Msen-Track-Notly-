@@ -1,10 +1,10 @@
-import { NotebookText } from "lucide-react";
+import Image from 'next/image';
 
 export function Logo() {
   return (
     <div className="flex items-center gap-2 font-headline text-lg font-semibold text-primary">
-      <NotebookText className="h-6 w-6" />
-      <span>Msen Track Notly</span>
+      <Image src="/logo.png" alt="Msen Track Notely Logo" width={24} height={24} />
+      <span>Msen Track Notely</span>
     </div>
   );
 }
