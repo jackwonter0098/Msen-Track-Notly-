@@ -6,7 +6,7 @@ import { AppShell } from '@/components/app-shell';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'TrackFlow Notely',
+  title: 'Msen Track Notely',
   description: 'Track your challenges and take notes on your progress.',
 };
 

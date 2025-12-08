@@ -1,4 +1,4 @@
-# **App Name**: TrackFlow Notely
+# **App Name**: Msen Track Notely
 
 ## Core Features:
 
