@@ -18,6 +18,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { ChallengeTimer } from '@/components/challenge-timer';
 
 const moodHighlightStyles: { [key: string]: { card: string; border: string } } = {
     '😊': { card: 'bg-green-100 dark:bg-green-900/30', border: 'border-green-300 dark:border-green-700' },
@@ -265,6 +266,7 @@ Let's keep going! #TrackFlowNotely`;
                 <CardContent>
                     <Progress value={progress} className="h-2 mb-2" />
                     <p className="text-sm text-muted-foreground">{Math.round(progress)}% complete ({differenceInDays(new Date(), startDate)} of {challenge.durationDays} days)</p>
+                    {challenge.status === 'active' && <ChallengeTimer startDate={startDate} durationDays={challenge.durationDays} />}
                 </CardContent>
                  <CardFooter className="text-sm text-muted-foreground">
                     From {format(startDate, 'PPP')} to {format(addDays(startDate, challenge.durationDays), 'PPP')}
@@ -308,4 +310,3 @@ Let's keep going! #TrackFlowNotely`;
     );
 }
 
-    

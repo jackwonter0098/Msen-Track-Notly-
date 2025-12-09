@@ -11,7 +11,7 @@ interface ChallengeContextType {
   challenges: Challenge[];
   loading: boolean;
   addChallenge: (challenge: Omit<Challenge, 'id' | 'status' | 'isArchived' | 'notes' | 'startDate'> & { startDate: Date }) => string;
-  updateChallenge: (id: string, challengeData: Partial<Omit<Challenge, 'id'>>) => void;
+  updateChallenge: (id: string, challengeData: Partial<Omit<Challenge, 'id' | 'startDate'>> & { startDate?: Date }) => void;
   deleteChallenge: (challengeId: string) => void;
   getChallengeById: (id: string) => Challenge | undefined;
   addNoteToChallenge: (challengeId: string, note: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>) => void;
@@ -30,40 +30,39 @@ export const ChallengeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const updateChallengeStatuses = () => {
-      if (typeof window !== 'undefined') {
-        const storedChallenges: Challenge[] = JSON.parse(window.localStorage.getItem('challenges') || '[]');
-        let challengesUpdated = false;
-        const updatedChallenges = storedChallenges.map(challenge => {
-          if (challenge.status === 'active') {
-            const startDate = getStartDateAsDate(challenge.startDate);
-            const endDate = new Date(startDate.getTime() + challenge.durationDays * 24 * 60 * 60 * 1000);
-            if (Date.now() > endDate.getTime()) {
-              challengesUpdated = true;
-              return { ...challenge, status: 'completed' as 'completed' };
-            }
+      let challengesUpdated = false;
+      const updatedChallenges = challenges.map(challenge => {
+        if (challenge.status === 'active') {
+          const startDate = getStartDateAsDate(challenge.startDate);
+          const endDate = new Date(startDate.getTime() + challenge.durationDays * 24 * 60 * 60 * 1000);
+          if (Date.now() > endDate.getTime()) {
+            challengesUpdated = true;
+            return { ...challenge, status: 'completed' as 'completed' };
           }
-          return challenge;
-        });
-
-        if (challengesUpdated) {
-          setChallenges(updatedChallenges);
         }
+        return challenge;
+      });
+
+      if (challengesUpdated) {
+        setChallenges(updatedChallenges);
       }
     };
     
     try {
-      updateChallengeStatuses();
+      if (challenges && challenges.length > 0) {
+        updateChallengeStatuses();
+      }
     } catch(error) {
       console.error("Error during initial status update:", error);
     } finally {
       setLoading(false);
     }
     
-    const intervalId = setInterval(updateChallengeStatuses, 60000);
+    const intervalId = setInterval(updateChallengeStatuses, 60 * 60 * 1000);
 
     return () => clearInterval(intervalId);
     
-  }, [setChallenges]);
+  }, [challenges, setChallenges]);
 
 
   const addChallenge = (challengeData: Omit<Challenge, 'id' | 'status' | 'isArchived' | 'notes' | 'startDate'> & { startDate: Date }) => {
@@ -81,20 +80,26 @@ export const ChallengeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateChallenge = (id: string, challengeData: Partial<Omit<Challenge, 'id' | 'startDate'>> & { startDate?: Date }) => {
-    setChallenges(prev => 
+    setChallenges(prev =>
       prev.map(c => {
         if (c.id === id) {
-          const updatedChallenge: Challenge = { ...c, ...challengeData, id: c.id };
-          if (challengeData.startDate) {
-            updatedChallenge.startDate = format(challengeData.startDate, 'yyyy-MM-dd');
+          const { startDate, ...restOfData } = challengeData;
+          
+          let updatedChallenge = { ...c, ...restOfData };
+  
+          if (startDate) {
+            updatedChallenge.startDate = format(startDate, 'yyyy-MM-dd');
           }
-          const startDate = getStartDateAsDate(updatedChallenge.startDate);
-          const endDate = new Date(startDate.getTime() + updatedChallenge.durationDays * 24 * 60 * 60 * 1000);
-          if (new Date() > endDate) {
+  
+          const newStartDate = getStartDateAsDate(updatedChallenge.startDate);
+          const newEndDate = new Date(newStartDate.getTime() + updatedChallenge.durationDays * 24 * 60 * 60 * 1000);
+          
+          if (new Date() > newEndDate) {
             updatedChallenge.status = 'completed';
           } else {
             updatedChallenge.status = 'active';
           }
+  
           return updatedChallenge;
         }
         return c;
@@ -172,7 +177,7 @@ export const ChallengeProvider = ({ children }: { children: ReactNode }) => {
       startDate: format(new Date(), 'yyyy-MM-dd'),
       status: 'active',
       isArchived: false,
-      notes: [],
+      notes: [], // Still not copying notes, will address later
     };
     setChallenges(prev => [...prev, newChallenge]);
   };
@@ -193,7 +198,7 @@ export const ChallengeProvider = ({ children }: { children: ReactNode }) => {
       unarchiveChallenge,
       duplicateChallenge,
     }}>
-      {!loading && children}
+      {children}
     </ChallengeContext.Provider>
   );
 };
@@ -205,5 +210,3 @@ export const useChallenges = () => {
   }
   return context;
 };
-
-    
