@@ -38,12 +38,3 @@ To get started with this project:
     ```
 
 Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
-# Msen-Track-Notly
-# Msen-Track-Notly
-# Msen-Track-Notly
-# Msen-Track-Notly
-# Msen-Track-Notly
-<<<<<<< HEAD
-# Update-
-=======
->>>>>>> 77bc0fe1a91cdab31d77d3906252829c03175ccb
