@@ -4,11 +4,11 @@
   "private": "true",
   "scripts": {
     "dev": "next dev",
+    "dev:alt": "next dev --port 8081",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.36.2",
     "@genkit-ai/google-genai": "^1.20.0",
     "@genkit-ai/next": "^1.25.0",
     "@hookform/resolvers": "^4.1.3",

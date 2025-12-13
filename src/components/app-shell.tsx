@@ -4,23 +4,19 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils"
 import {
     LayoutDashboard,
     ListChecks,
-    User,
 } from "lucide-react"
 
 import { Logo } from "@/components/logo"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Button } from "@/components/ui/button";
 
 const menuItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/challenges", label: "Challenges", icon: ListChecks },
-  { href: "/profile", label: "Profile", icon: User },
 ]
 
 function MainNav({ className }: { className?: string }) {
@@ -53,14 +49,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </div>
                 <div className="flex-1 flex justify-end items-center gap-4">
                     <ThemeToggle />
-                    <SignedIn>
-                        <UserButton afterSignOutUrl="/"/>
-                    </SignedIn>
-                    <SignedOut>
-                        <SignInButton>
-                            <Button variant="outline">Sign In</Button>
-                        </SignInButton>
-                    </SignedOut>
                 </div>
             </header>
             <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
