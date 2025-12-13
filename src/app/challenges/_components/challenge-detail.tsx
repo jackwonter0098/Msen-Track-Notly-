@@ -52,10 +52,10 @@ const NoteCard = ({ note, onEdit, onDelete }: { note: Note, onEdit: () => void, 
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This will permanently delete this note. This action cannot be undone.
-                            </AlertDialogDescription>
                         </AlertDialogHeader>
+                        <AlertDialogDescription>
+                            This will permanently delete this note. This action cannot be undone.
+                        </AlertDialogDescription>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction onClick={onDelete} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
@@ -213,9 +213,7 @@ export function ChallengeDetailClient({ challengeId }: { challengeId: string }) 
         if (!challenge) return;
         const daysCompleted = differenceInDays(new Date(), startDate);
         const progressPercentage = Math.round(progress);
-        const summary = `I'm currently on Day ${daysCompleted} of my "${challenge.title}" challenge!
-Progress: ${progressPercentage}% complete.
-Let's keep going! #TrackFlowNotely`;
+        const summary = `I'm currently on Day ${daysCompleted} of my \"${challenge.title}\" challenge!\nProgress: ${progressPercentage}% complete.\nLet's keep going! #TrackFlowNotely`;
         
         navigator.clipboard.writeText(summary).then(() => {
             toast({
@@ -309,4 +307,3 @@ Let's keep going! #TrackFlowNotely`;
         </div>
     );
 }
-
